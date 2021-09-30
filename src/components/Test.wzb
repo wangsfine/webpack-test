@@ -1,0 +1,43 @@
+<template>
+    <div>
+        hello wzb
+        <p 
+        :value="this.state.count" 
+        :value1="'w'" 
+        :value2="`${1 + 1}`" 
+        :value3="1"
+        >
+            name: {{ this.props.name }}
+        </p>
+        <p>count: {{this.state.count}}</p>
+        <button @click="this.handleClick">点击我</button>
+    </div>
+</template>
+
+<script>
+    import Wzb from '../wzb/index.js';
+    export default class Test extends Wzb.Component {
+        state = {
+            count: 0,
+        }
+
+        constructor(props) {
+            super(props);
+        }
+
+        mounted() {}
+
+        handleClick = () => {
+            this.setState((state, props) => {
+                const { count } = state;
+                return {
+                    count: count + 1,
+                };
+            })
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

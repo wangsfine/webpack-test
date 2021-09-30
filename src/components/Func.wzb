@@ -1,0 +1,10 @@
+<template #functional="ctx">
+    <div>{{ ctx.props.name }}</div>
+    <div>{{ test() }}</div>
+    <button @click="ctx.props.click">点击</button>
+</template>
+<script>
+    function test() {
+        return 'test';
+    }
+</script>

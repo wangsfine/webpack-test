@@ -1,0 +1,26 @@
+{
+  "name": "webpack-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production --env NODE_ENV=production"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.3.2",
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.15.4",
+    "@babel/parser": "^7.15.7",
+    "@babel/template": "^7.15.4",
+    "@babel/traverse": "^7.15.4",
+    "@babel/types": "^7.15.6",
+    "htmlparser2": "^7.1.2",
+    "mustache": "^4.2.0"
+  }
+}
