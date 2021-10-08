@@ -1,33 +1,31 @@
 <template>
-    <div>
-        hello wzb
-        <p 
+    <h3>vue template syntax</h3>
+    <div :class="`${this.state.count % 2 === 0 ? 'red' : 'blue'}`">
+        hello, this is svelte state{{ svelteState }}
+        <p
         :value="this.state.count" 
         :value1="'w'" 
-        :value2="`${1 + 1}`" 
+        :value2="`${this.state.count + 1}`" 
         :value3="1"
         >
-            name: {{ this.props.name }}
+            this is react props: {{ this.props.name }}
         </p>
-        <p>count: {{this.state.count}}</p>
+        <p>this is react state: {{this.state.count}}</p>
         <button @click="this.handleClick">点击我</button>
     </div>
 </template>
 
 <script>
     import Wzb from '../wzb/index.js';
+    // svelte state
+    let svelteState = 0;
     export default class Test extends Wzb.Component {
+        // react state
         state = {
             count: 0,
         }
-
-        constructor(props) {
-            super(props);
-        }
-
-        mounted() {}
-
         handleClick = () => {
+            svelteState++;
             this.setState((state, props) => {
                 const { count } = state;
                 return {
@@ -38,6 +36,11 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .red {
+        color: red;
+    }
+    .blue {
+        color: blue;
+    }
 </style>

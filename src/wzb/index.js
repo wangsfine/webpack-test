@@ -64,7 +64,6 @@ Wzb.render = function(cmp, el) {
     cmp._render();
     if (typeof el === 'string') {
         el = document.querySelector(el)
-        return;
     }
     cmp._mount(el);
     cmp.mounted();

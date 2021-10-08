@@ -1,40 +1,38 @@
 const htmlParser = require('htmlparser2');
-const util = require('util');
 
 function parseHTML(html) {
     const rootNodes = [];
     const stack = [];
+    let gAttrs = {};
+    let gListeners = {};
     const parser = new htmlParser.Parser({
         onopentag(tagName, attrs) {
             const node = {
                 type: 'tag',
                 name: tagName,
                 children: [],
-                attrs: {},
-                listeners: {},
+                attrs: gAttrs,
+                listeners: gListeners,
             };
             stack.push(node);
+            gAttrs = {};
+            gListeners = {};
         },
         onattribute(name, value, quote) {
-            const length = stack.length;
-            if (length > 0) {
-                const { attrs, listeners } = stack[length - 1];
-                // 1、 :value="xxx"
-                const bindingResult = /^:([a-zA-Z$_][$\w]*)$/.exec(name);
-                if (bindingResult) {
-                    const prop = bindingResult[1];
-                    return Object.assign(attrs, { [prop]: { value: value, type: 'Expression' }})
-                }
-                // 2、listeners
-                const listenerResult = /^@(\w+)$/.exec(name);
-                if (listenerResult) {
-                    const event = listenerResult[1];
-                    return Object.assign(listeners, { [event]: value })
-                }
-                // 3、common attr
-                Object.assign(attrs, { [name]: { value, type: 'Literal' }})
-
+            // 1、 :value="xxx"
+            const bindingResult = /^:([a-zA-Z$_][$\w]*)$/.exec(name);
+            if (bindingResult) {
+                const prop = bindingResult[1];
+                return Object.assign(gAttrs, { [prop]: { value: value, type: 'Expression' }})
             }
+            // 2、listeners
+            const listenerResult = /^@(\w+)$/.exec(name);
+            if (listenerResult) {
+                const event = listenerResult[1];
+                return Object.assign(gListeners, { [event]: value })
+            }
+            // 3、common attr
+            Object.assign(gAttrs, { [name]: { value, type: 'Literal' }})
         },
         ontext(text) {
             text = text.trim();
